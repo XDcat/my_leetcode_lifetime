@@ -73,20 +73,8 @@ class BinaryTree:
 #         self.right = None
 
 class Solution:
-    def isValidBST(self, root: TreeNode) -> bool:
-        """使用栈的方式，实现中序遍历"""
-        stack, inorder = list(), float("-inf")
-        while stack or root:
-            while root:
-                stack.append(root)
-                root = root.left
-
-            root = stack.pop()
-            if root.val <= inorder:
-                return False
-            inorder = root.val
-            root = root.right
-        return True
+    def levelOrder(self, root: TreeNode):
+        pass
 
 
 if __name__ == '__main__':

@@ -73,20 +73,26 @@ class BinaryTree:
 #         self.right = None
 
 class Solution:
-    def isValidBST(self, root: TreeNode) -> bool:
-        """使用栈的方式，实现中序遍历"""
-        stack, inorder = list(), float("-inf")
-        while stack or root:
-            while root:
-                stack.append(root)
-                root = root.left
-
-            root = stack.pop()
-            if root.val <= inorder:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        """
+        某棵树对称，说明两颗子树是对称的，两颗子树对称意味着：
+            1. 两个子树的值相等
+            2. 左子树的左子树 == 右子树的右子树，左子树的右子树 == 右子树的左子树
+        就可以发现一个递归，也就是将树的问题转化为两个子树的问题
+        :param root:
+        :return:
+        """
+        def check(left, right):
+            """检查左右子树对称"""
+            if left is None and right is None:
+                return True
+            if left is None or right is None:
                 return False
-            inorder = root.val
-            root = root.right
-        return True
+
+            return left.val == right.val and check(left.left, right.right) and check(left.right, right.left)
+
+        return check(root, root)
+
 
 
 if __name__ == '__main__':

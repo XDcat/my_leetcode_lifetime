@@ -73,29 +73,51 @@ class BinaryTree:
 #         self.right = None
 
 class Solution:
-    def isValidBST(self, root: TreeNode) -> bool:
-        """使用栈的方式，实现中序遍历"""
-        stack, inorder = list(), float("-inf")
-        while stack or root:
-            while root:
-                stack.append(root)
-                root = root.left
+    def isSymmetric(self, root: TreeNode) -> bool:
+        """
+        迭代做法: 将递归修改为迭代
+        某棵树对称，说明两颗子树是对称的，两颗子树对称意味着：
+            1. 两个子树的值相等
+            2. 左子树的左子树 == 右子树的右子树，左子树的右子树 == 右子树的左子树
+        就可以发现一个递归，也就是将树的问题转化为两个子树的问题
+        :param root:
+        :return:
+        """
+        def check(left, right):
+            """检查左右子树对称"""
+            queue = list()
+            queue.append(left)
+            queue.append(right)
+            while queue:
+                left = queue.pop(0)
+                right = queue.pop(0)
 
-            root = stack.pop()
-            if root.val <= inorder:
-                return False
-            inorder = root.val
-            root = root.right
-        return True
+                if left is None and right is None:
+                    continue
+                if left is None or right is None:
+                    return False
+                if left.val != right.val:
+                    return False
+
+                queue.append(left.left)
+                queue.append(right.right)
+
+                queue.append(left.right)
+                queue.append(right.left)
+            return True
+
+        return check(root, root)
+
+
 
 
 if __name__ == '__main__':
     # 构造树
-    vals = [3, 9, 20, None, None, 15, 7]
+    vals = [1, 2, 2, 3, 4, 4, 3]
     i = 0
     btree = BinaryTree()
     for i in vals:
         btree.add(i)
     print(btree)
-
+    print(Solution().isSymmetric(btree.root))
     print(btree)
