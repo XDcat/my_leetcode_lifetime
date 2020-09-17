@@ -74,7 +74,23 @@ class BinaryTree:
 
 class Solution:
     def levelOrder(self, root: TreeNode):
-        pass
+        res = []  # 结果
+
+        def dfs(node, level):
+            if node is None:
+                return
+
+            if len(res) == level:
+                res.append(list())
+
+            res[level].append(node.val)
+            dfs(node.left, level + 1)
+            dfs(node.right, level + 1)
+
+        dfs(root, 0)
+        return res
+
+
 
 
 if __name__ == '__main__':
@@ -85,5 +101,5 @@ if __name__ == '__main__':
     for i in vals:
         btree.add(i)
     print(btree)
-
+    print(Solution().levelOrder(btree.root))
     print(btree)
