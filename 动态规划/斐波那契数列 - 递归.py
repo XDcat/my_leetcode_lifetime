@@ -7,6 +7,8 @@ Fix the Problem, Not the Blame.
 """
 
 import time
+
+
 def fib(n):
     if n < 2:
         return n
