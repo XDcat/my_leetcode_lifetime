@@ -6,6 +6,7 @@ __project__ = leetcode 刷题
 Fix the Problem, Not the Blame.
 '''
 
+
 def find_max(weights, values, capacity):
     """
     多重背包问题
@@ -21,13 +22,14 @@ def find_max(weights, values, capacity):
     values = [0] + values
     results = [0] * (capacity + 1)
     for i in range(1, N + 1):
-        for j in range(weights[i], capacity+1):
-            results[j] = max(results[j], results[j-weights[i]] + values[i])
+        for j in range(weights[i], capacity + 1):
+            results[j] = max(results[j], results[j - weights[i]] + values[i])
 
     return results[-1]
 
+
 if __name__ == '__main__':
-    weights= [5, 8]
+    weights = [5, 8]
     values = [5, 7]
     capacity = 10
     res = find_max(weights, values, capacity)
