@@ -7,9 +7,25 @@ Fix the Problem, Not the Blame.
 '''
 
 
-class PostfixExpression:
-    def __init__(self, exp):
-        self.exp = list(exp)
+class Solution(object):
+    def calculate(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        self.exp = []
+        i = 0
+        while i < len(s):
+            if s[i] == " ":
+                pass
+            elif s[i] in "+*/":
+                self.exp.append(i)
+            else:
+                while i < len(s) and s[i] == " ":
+                    i += 1
+                flag = 1 if s[i] != "-" else -1
+
+
         self.priority = {
             "(": - 1,
             ")": - 1,
@@ -20,12 +36,12 @@ class PostfixExpression:
             "%": 1,
             "^": 2,
         }
+        return self.cal()
 
     def generate(self):
         stack = []
         post_exp = []
         for i in self.exp:
-
             if i not in self.priority and i not in "()":
                 # 数字
                 post_exp.append(i)
@@ -48,7 +64,7 @@ class PostfixExpression:
             post_exp.append(stack.pop())
         return post_exp
 
-    def calculate(self):
+    def cal(self):
         post_exp = self.generate()
         stack = []
         for i in post_exp:
@@ -69,18 +85,14 @@ class PostfixExpression:
                     vf = v2 ** v1
                 stack.append(vf)
             else:
-                stack.append(i)
+                stack.append(int(i))
 
         return stack[0]
 
 
 if __name__ == '__main__':
-    exp = []
-    exp.append("(A+B)*(C-D)/E+G/H")
-    exp.append("a+d*(b-c)")
-    exp.append("(A+B)*(C-D)/E^F+G%H")
-    for i in exp:
-        print(PostfixExpression(i).generate())
-
-    e1 = list("(1+4)*(10-6)/2^2+3%2")
-    print(PostfixExpression(e1).calculate())
+    s = " 2-1 + 2 "
+    s = "(1+(4+5+2)-3)+(6+8)"
+    s = "(1)"
+    res = Solution().calculate(s)
+    print(res)
